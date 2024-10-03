@@ -2,7 +2,6 @@ package dev.example.restaurantManager.repository;
 
 import dev.example.restaurantManager.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.ArrayList;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
