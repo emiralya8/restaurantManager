@@ -5,7 +5,6 @@ import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Locale;
 import java.util.UUID;
 
