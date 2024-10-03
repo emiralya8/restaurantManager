@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,7 +9,17 @@
 
 <H1>Welcome</H1>
 
+<h2> Customers</h2>
 
+<table>
+    <tr th:each = "customer:${customersToView}">
+        <td th:text="${customer.id} "> </td>
+        <td th:text="${customer.name} "> </td>
+        <td th:text="${customer.email} "> </td>
+        <td th:text="${customer.phoneNumber} "> </td>
+
+    </tr>
+</table>
 
 </body>
 </html>

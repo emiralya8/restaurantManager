@@ -27,7 +27,8 @@ public class RestaurantManagerApplication {
 				Faker faker = new Faker(new Locale("en-US"));
 
 				// Create and save 100 fake customers
-				for (int i = 0; i < 1000; i++) {
+				int customerQty = 100;
+				for (int i = 0; i < customerQty; i++) {
 					Customer customer = new Customer(
 							UUID.randomUUID().toString(),
 							faker.name().fullName(),
@@ -37,7 +38,7 @@ public class RestaurantManagerApplication {
 					customerRepository.save(customer);
 				}
 
-				System.out.println("100 fake customers have been created and saved to the database.");
+				System.out.println(customerQty + " fake customers have been created and saved to the database.");
 			}
 		};
 	}
