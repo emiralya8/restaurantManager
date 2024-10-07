@@ -4,8 +4,8 @@ import dev.example.restaurantManager.repository.CustomerRepository;
 import dev.example.restaurantManager.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/api/v1/customer")
 @RestController
@@ -14,25 +14,30 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
-    // CRUD for customer
+    // CRUD: read for customer
     @GetMapping("/allCustomers")
     public List<Customer> getAllCustomers() {
-
+        //return customerRepository.findAll();
         List<Customer> customers = customerRepository.findAll();
-
         return customers;
     }
 
-
-
+    // CRUD: create for customer
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
+        // Generate a unique ID
+        customer.setId(UUID.randomUUID().toString());
         return customerRepository.save(customer);
     }
-/*
+
     @GetMapping("/{id}")
     public Customer getCustomerById(@PathVariable String id) {
         return customerRepository.findById(id).orElse(null);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable String id) {
+        customerRepository.deleteById(id);
     }
 
     // Update a customer by ID and return the updated customer
@@ -47,10 +52,8 @@ public class CustomerController {
         return null;
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable String id) {
-        customerRepository.deleteById(id);
-    }*/
+
+
 
 
     //---------------------------------------------------------------
