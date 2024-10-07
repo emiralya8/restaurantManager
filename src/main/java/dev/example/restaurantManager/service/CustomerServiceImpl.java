@@ -40,6 +40,24 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
+    /*@Override
+    public Customer updateCustomer(String id, Customer customerDetails) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null) {
+            if (customerDetails.getName() != null) {
+                customer.setName(customerDetails.getName());
+            }
+            if (customerDetails.getEmail() != null) {
+                customer.setEmail(customerDetails.getEmail());
+            }
+            if (customerDetails.getPhoneNumber() != null) {
+                customer.setPhoneNumber(customerDetails.getPhoneNumber());
+            }
+            return customerRepository.save(customer);
+        }
+        return null;
+    }*/
+
     @Override
     public void deleteCustomer(String id) {
         customerRepository.deleteById(id);

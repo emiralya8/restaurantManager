@@ -1,16 +1,47 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.repository.CustomerRepository;
 import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.UUID;
+
 
 @RequestMapping("/api/v1/customer")
 @RestController
 public class CustomerController {
 
+
+  @Autowired
+    private CustomerService customerService;
+
+    @GetMapping("/allCustomers")
+    public List<Customer> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
+
+    @PostMapping
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.createCustomer(customer);
+    }
+
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable String id) {
+        return customerService.getCustomerById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
+        return customerService.updateCustomer(id, customerDetails);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable String id) {
+        customerService.deleteCustomer(id);
+    }
+
+
+/*
     @Autowired
     CustomerRepository customerRepository;
 
@@ -51,43 +82,8 @@ public class CustomerController {
         }
         return null;
     }
+*/
 
 
-
-
-
-    //---------------------------------------------------------------
-    // with service layer and controller layer integration
-    //---------------------------------------------------------------
-
-
-
-/*    @Autowired
-    private CustomerService customerService;
-
-    @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
-    }
-
-    @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.createCustomer(customer);
-    }
-
-    @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable String id) {
-        return customerService.getCustomerById(id);
-    }
-
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        return customerService.updateCustomer(id, customerDetails);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable String id) {
-        customerService.deleteCustomer(id);
-    }*/
 
 }
