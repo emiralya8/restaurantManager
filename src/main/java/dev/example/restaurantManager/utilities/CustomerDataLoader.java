@@ -17,10 +17,12 @@ public class CustomerDataLoader {
     public void createFakeCustomers() {
         // Check if the database is empty
         if (customerRepository.count() == 0) {
+            System.out.println(" 0 records at the database found");
             Faker faker = new Faker(new Locale("en-US"));
 
+            int qty = 50;
             // Create and save 100 fake customers
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < qty; i++) {
                 Customer customer = new Customer(
                         UUID.randomUUID().toString(),
                         faker.name().fullName(),
@@ -30,7 +32,7 @@ public class CustomerDataLoader {
                 customerRepository.save(customer);
             }
 
-            System.out.println("100 fake customers have been created and saved to the database.");
+            System.out.println(qty + " fake customers have been created and saved to the database.");
         }
     }
 }

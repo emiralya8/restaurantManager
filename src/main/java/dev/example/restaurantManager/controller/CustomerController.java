@@ -4,10 +4,10 @@ import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-//import io.swagger.annotations.*;
 
 @RequestMapping("/api/v1/customer")
 @RestController
@@ -39,11 +39,8 @@ public class CustomerController {
 
     // just a drat of getCustomerById with headers and responseEntity
     // just the first version
-    //@ApiOperation(value = "Get a customer by Id")
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(
-            //@ApiParam(value = "Customer id from which customer object will retrieve by H2 DATABASE on memory", required = true)
-            @PathVariable String id) {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
         Customer customer = customerService.getCustomerById(id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -53,7 +50,7 @@ public class CustomerController {
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
 
-
+        //new ResponseEntity<>(customer, headers, HttpStatus.OK);
         return customer != null
                 ? ResponseEntity.accepted().headers(headers).body(customer)
                 : ResponseEntity.notFound().headers(headers).build();
