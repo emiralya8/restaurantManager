@@ -8,6 +8,6 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     int countByName(String name);
     ArrayList<Customer> findByName(String name);
-
+    long count();
 
 }
