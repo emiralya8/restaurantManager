@@ -1,10 +1,9 @@
 package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.service.CustomerService;
+import dev.example.restaurantManager.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,35 +12,34 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
-
-  @Autowired
-    private CustomerService customerService;
+    @Autowired
+    private IService<Customer> customerService;
 
     @GetMapping("/allCustomers")
     public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+        return customerService.getAllElements();
     }
 
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.createCustomer(customer);
+        return customerService.createElement(customer);
     }
 
     @PutMapping("/{id}")
     public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        return customerService.updateCustomer(id, customerDetails);
+        return customerService.updateElement(id, customerDetails);
     }
 
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable String id) {
-        customerService.deleteCustomer(id);
+        customerService.deleteElement(id);
     }
 
     // just a drat of getCustomerById with headers and responseEntity
     // just the first version
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
-        Customer customer = customerService.getCustomerById(id);
+        Customer customer = customerService.getElementById(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", "Get a customer by Id");
