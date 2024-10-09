@@ -17,12 +17,21 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
-    public ResponseEntity<List<Customer>> getAllCustomers() {
+    public ResponseEntity<List<Customer>> getAllCustomers( ) {
         List<Customer> customers = customerService.getAllCustomers();
         HttpHeaders headers = getCommonHeaders("Get all customers");
-        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
 
+        /*if (customers != null && !customers.isEmpty()) {
+            return new ResponseEntity<>(customers, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }*/
+
+        // Ternary operator is concise, reduces code clutter, improves readability
+        // and efficiently handles simple conditional returns in a single line.
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
         return customers != null && !customers.isEmpty()
                 ? new ResponseEntity<>(customers, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
@@ -52,6 +61,8 @@ public class CustomerController {
     public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
         boolean deleted = customerService.deleteCustomer(id);
         HttpHeaders headers = getCommonHeaders("Delete a customer");
+        headers.add("deleted", String.valueOf(deleted));
+
 
         return deleted
                 ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
@@ -75,6 +86,8 @@ public class CustomerController {
         headers.add("date", new Date().toString());
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
+        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
+        headers.add("object", "customers");
         return headers;
     }
 }
