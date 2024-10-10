@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Menu {
 
     @Id
+    private String id;
     private String name;
     private Double price;
     private String content;
