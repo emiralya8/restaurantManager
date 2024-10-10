@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.service;
 
+import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.model.Menu;
 import dev.example.restaurantManager.repository.IMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MenuService implements IService<Menu>{
@@ -54,7 +56,15 @@ public class MenuService implements IService<Menu>{
     }
 
     @Override
-    public void deleteElement(String id) {
-        menuRepository.findById(id).ifPresent(menuElement -> menuRepository.deleteById(id));
+    public boolean deleteElement(String id) {
+        menuRepository.deleteById(id);
+        Optional<Menu> menu = menuRepository.findById(id);
+        return menu.isEmpty()
+                ? false : true ;
+    }
+
+    @Override
+    public long countElements() {
+        return 0;
     }
 }

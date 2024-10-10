@@ -9,5 +9,6 @@ public interface IService<T> {
     T createElement(T element);
     T getElementById(String id);
     T updateElement(String id, T eDetails);
-    void deleteElement(String id);
+    boolean deleteElement(String id);
+    long countElements();
 }

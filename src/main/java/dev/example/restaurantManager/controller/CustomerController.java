@@ -1,9 +1,11 @@
 package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.repository.ICustomerRepository;
 import dev.example.restaurantManager.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
@@ -15,6 +17,8 @@ public class CustomerController {
 
     @Autowired
     private IService<Customer> customerService;
+
+    private ICustomerRepository customerRepository;
 
     // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
@@ -85,31 +89,7 @@ public class CustomerController {
         headers.add("date", new Date().toString());
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
-        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
-        headers.add("object", "customers");
-        return headers;
-    }
-
-    // Update a customer by ID and return the updated customer
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        Customer customer = customerRepository.findById(id).orElse(null);
-        if (customer != null) {
-            customer.setName(customerDetails.getName());
-            customer.setEmail(customerDetails.getEmail());
-            return customerRepository.save(customer);
-        }
-        return null;
-    }
-
-    private HttpHeaders getCommonHeaders(String description) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("desc", description);
-        headers.add("content-type", "application/json");
-        headers.add("date", new Date().toString());
-        headers.add("server", "H2 Database");
-        headers.add("version", "1.0.0");
-        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
+        headers.add("customer-count", String.valueOf(customerService.countElements()));
         headers.add("object", "customers");
         return headers;
     }

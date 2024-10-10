@@ -7,32 +7,33 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService implements IService<Customer>{
 
     @Autowired
-    private ICustomerRepository ICustomerRepository;
+    private ICustomerRepository customerRepository;
 
     @Override
     public List<Customer> getAllElements() {
-        return ICustomerRepository.findAll();
+        return customerRepository.findAll();
     }
 
     @Override
     public Customer createElement(Customer element) {
-        return ICustomerRepository.save(element);
+        return customerRepository.save(element);
     }
 
     @Override
     public Customer getElementById(String id) {
-        return ICustomerRepository.findById(id).orElse(null);
+        return customerRepository.findById(id).orElse(null);
     }
 
     @Override
     public Customer updateElement(String id, Customer eDetails) {
         boolean isTrue = false;
-        Customer customerElement = ICustomerRepository.findById(id).orElse(null);
+        Customer customerElement = customerRepository.findById(id).orElse(null);
         if(customerElement != null){
             Field[] fields = customerElement.getClass().getDeclaredFields();
             for (Field field : fields) {
@@ -46,14 +47,22 @@ public class CustomerService implements IService<Customer>{
                     throw new RuntimeException(e);
                 }
             }
-            ICustomerRepository.save(customerElement);
+            customerRepository.save(customerElement);
         }
 
         return isTrue ? customerElement : eDetails;
     }
 
     @Override
-    public void deleteElement(String id) {
-        ICustomerRepository.findById(id).ifPresent(customerElement -> ICustomerRepository.deleteById(id));
+    public boolean deleteElement(String id) {
+        customerRepository.deleteById(id);
+        Optional<Customer> customer = customerRepository.findById(id);
+        return customer.isEmpty()
+                ? false : true ;
+    }
+
+    @Override
+    public long countElements() {
+        return customerRepository.count();
     }
 }
