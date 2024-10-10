@@ -1,7 +1,7 @@
 package dev.example.restaurantManager;
 
 import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.repository.ICustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -19,7 +19,7 @@ public class CustomerRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
 
     @Test
     public void whenFindByEmail_thenReturnCustomer() {
