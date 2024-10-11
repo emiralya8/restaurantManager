@@ -17,7 +17,7 @@ public class RestaurantManagerApplication {
 		return args -> {
 			resourcesDataLoader.createFakeCustomers();
 			resourcesDataLoader.createFakeMenus();
-			//resourcesDataLoader.createFakeTables();
+			resourcesDataLoader.createFakeTables();
 		};
 	}
 

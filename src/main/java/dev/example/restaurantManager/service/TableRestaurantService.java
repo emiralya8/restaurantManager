@@ -1,10 +1,8 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Menu;
-import dev.example.restaurantManager.model.Table;
-import dev.example.restaurantManager.repository.ITableRepository;
+import dev.example.restaurantManager.model.TableRestaurant;
+import dev.example.restaurantManager.repository.ITableRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -12,53 +10,53 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TableService implements IService<Table>{
+public class TableRestaurantService implements IService<TableRestaurant>{
 
     @Autowired
-    private ITableRepository tableRepository;
+    private ITableRestaurantRepository tableRepository;
 
     @Override
-    public List<Table> getAllElements() {
+    public List<TableRestaurant> getAllElements() {
         return tableRepository.findAll();
     }
 
     @Override
-    public Table createElement(Table element) {
+    public TableRestaurant createElement(TableRestaurant element) {
         return tableRepository.save(element);
     }
 
     @Override
-    public Table getElementById(String id) {
+    public TableRestaurant getElementById(String id) {
         return tableRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Table updateElement(String id, Table eDetails) {
+    public TableRestaurant updateElement(String id, TableRestaurant eDetails) {
         boolean isTrue = false;
-        Table tableElement = tableRepository.findById(id).orElse(null);
-        if(tableElement != null){
-            Field[] fields = tableElement.getClass().getDeclaredFields();
+        TableRestaurant tableRestaurantElement = tableRepository.findById(id).orElse(null);
+        if(tableRestaurantElement != null){
+            Field[] fields = tableRestaurantElement.getClass().getDeclaredFields();
             for (Field field : fields) {
                 try {
                     field.setAccessible(true);
-                    if(field.get(tableElement) != field.get(eDetails)){
+                    if(field.get(tableRestaurantElement) != field.get(eDetails)){
                         isTrue = true;
-                        field.set(tableElement,field.get(eDetails));
+                        field.set(tableRestaurantElement,field.get(eDetails));
                     }
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
             }
-            tableRepository.save(tableElement);
+            tableRepository.save(tableRestaurantElement);
         }
 
-        return isTrue ? tableElement : eDetails;
+        return isTrue ? tableRestaurantElement : eDetails;
     }
 
     @Override
     public boolean deleteElement(String id) {
         tableRepository.deleteById(id);
-        Optional<Table> table = tableRepository.findById(id);
+        Optional<TableRestaurant> table = tableRepository.findById(id);
         return table.isEmpty()
                 ? false : true ;
     }

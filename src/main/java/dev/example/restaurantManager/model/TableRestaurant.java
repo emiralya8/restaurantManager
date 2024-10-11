@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Table {
+public class TableRestaurant {
 
     @Id
     private String id;
@@ -18,6 +18,5 @@ public class Table {
     private String description;
     private int qty;
     private boolean busy;
-
 
 }

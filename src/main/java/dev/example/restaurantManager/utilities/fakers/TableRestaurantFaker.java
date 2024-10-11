@@ -1,21 +1,20 @@
 package dev.example.restaurantManager.utilities.fakers;
 
 import com.github.javafaker.Faker;
-import dev.example.restaurantManager.model.Menu;
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-public class TableFaker implements IFaker<Table>{
+public class TableRestaurantFaker implements IFaker<TableRestaurant>{
 
     private final Faker faker = new Faker(new Locale("en-US"));
 
     @Override
-    public Table CreateObject(Table object) {
-        return new Table(
+    public TableRestaurant CreateObject(TableRestaurant object) {
+        return new TableRestaurant(
                 UUID.randomUUID().toString(),
                 faker.funnyName().name(),
                 faker.funnyName().name().toString(),
@@ -25,18 +24,18 @@ public class TableFaker implements IFaker<Table>{
     }
 
     @Override
-    public List<Table> GetNObjects(int n) {
-        List<Table> lstTable = new ArrayList<Table>();
+    public List<TableRestaurant> GetNObjects(int n) {
+        List<TableRestaurant> lstTableRestaurant = new ArrayList<TableRestaurant>();
         for (int i = 0; i < n; i++) {
-            Table table = new Table(
+            TableRestaurant tableRestaurant = new TableRestaurant(
                     UUID.randomUUID().toString(),
                     faker.funnyName().name(),
                     faker.funnyName().name().toString(),
                     faker.number().numberBetween(1,7),
                     faker.random().nextBoolean()
             );
-            lstTable.add(table);
+            lstTableRestaurant.add(tableRestaurant);
         }
-        return lstTable;
+        return lstTableRestaurant;
     }
 }

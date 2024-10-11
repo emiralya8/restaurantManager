@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,23 +9,23 @@ import java.util.List;
 
 @RequestMapping("/api/v1/table")
 @RestController
-public class TableController {
+public class TableRestaurantController {
     @Autowired
-    private IService<Table> tableService;
+    private IService<TableRestaurant> tableService;
 
     @GetMapping("/allCustomers")
-    public List<Table> getAllTables() {
+    public List<TableRestaurant> getAllTables() {
         return tableService.getAllElements();
     }
 
     @PostMapping
-    public Table createTable(@RequestBody Table table) {
-        return tableService.createElement(table);
+    public TableRestaurant createTable(@RequestBody TableRestaurant tableRestaurant) {
+        return tableService.createElement(tableRestaurant);
     }
 
     @PutMapping("/{id}")
-    public Table updateTable(@PathVariable String id, @RequestBody Table tableDetails) {
-        return tableService.updateElement(id, tableDetails);
+    public TableRestaurant updateTable(@PathVariable String id, @RequestBody TableRestaurant tableRestaurantDetails) {
+        return tableService.updateElement(id, tableRestaurantDetails);
     }
 
     @DeleteMapping("/{id}")
