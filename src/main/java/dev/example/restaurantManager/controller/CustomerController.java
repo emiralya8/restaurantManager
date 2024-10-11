@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
+    // inject  from application.properties endpoint.url.customers
     @Value("${endpoint.url.customers}")
     private String endpointUrlCustomers;
 
