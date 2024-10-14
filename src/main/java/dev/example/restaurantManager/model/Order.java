@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Order {
 
+    private String id;
     private Date date;
     private String waiter;
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Table> tables;
-    private ArrayList<Menu> menus;
+    private ArrayList<Menu> menus = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -27,8 +27,6 @@ public class Order {
                 "peopleQty: " + peopleQty +"\n"  +
                 "totalPayment: " + totalPayment +" euros\n"  +
                 "paid: " + paid +"\n"  +
-                "Tables quantity: " + tables.size() +"\n"  +
-                "table: " + tables +"\n"  +
                 "Menus quantity: " + menus.size() +"\n"  +
                 "menus: " + menus
                 ;
