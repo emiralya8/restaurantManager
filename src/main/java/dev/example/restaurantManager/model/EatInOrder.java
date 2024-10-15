@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class EatInOrder extends Order {
 
     private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
+    //private TableRestaurant orderedTableRestaurant;
 
 
     public EatInOrder(String id, Date date, String waiter, int peopleQty,

@@ -2,14 +2,20 @@ package dev.example.restaurantManager.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
+
 
     private String id;
     private Date date;

@@ -11,19 +11,23 @@ import java.util.Date;
 @NoArgsConstructor
 public class TakeAwayOrder extends  Order {
 
-    private Customer nameCustomerTakeAway;
+    private Customer customerTakeAway;
 
+    // Constructor for TakeAwayOrder with the WHOLE DATA fields
     public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
                          double totalPayment, boolean paid, ArrayList<Menu> menus,
-                         Customer nameCustomerTakeAway) {
+                         Customer customerTakeAway) {
+
+        // THIS PART is SUPERCLASS
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
-        this.nameCustomerTakeAway = nameCustomerTakeAway;
+        // THIS PART is SUBCLASS
+        this.customerTakeAway = customerTakeAway;
     }
 
     @Override
     public String toString() {
         return super.toString() + "\n" +
                 "Type: Take Away\n" +
-                "Customer Name: " + nameCustomerTakeAway;
+                "Customer: " + customerTakeAway;
     }
 }

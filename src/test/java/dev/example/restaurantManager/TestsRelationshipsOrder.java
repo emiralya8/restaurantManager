@@ -43,15 +43,16 @@ public class TestsRelationshipsOrder {
             Order eatInOrder3 = new EatInOrder("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2, menu3, menu3)), new ArrayList<>(Arrays.asList(table1, table2)));
 
             // Create 3 TakeAwayOrder objects
-            Order takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menu1)), customer7 );
-            Order takeAwayOrder2 = new TakeAwayOrder("TO2", new Date(), "Bob", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), customer8 );
-            Order takeAwayOrder3 = new TakeAwayOrder("TO3", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), customer9);
+            Order takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menu1)), customer1 );
+            Order takeAwayOrder2 = new TakeAwayOrder("TO2", new Date(), "Bob", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), customer3 );
+            Order takeAwayOrder3 = new TakeAwayOrder("TO3", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), customer5);
+            Order takeAwayOrder4 = new TakeAwayOrder("TO4", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3, menu3, menu3, menu3)), customer9);
 
             // Create a list of all orders
-            ArrayList<Order> orders = new ArrayList<Order>();
+            ArrayList<Order> orders = new ArrayList<>();
             orders.addAll(Arrays.asList(shippingOrder1, shippingOrder2, shippingOrder3,
                     eatInOrder1, eatInOrder2, eatInOrder3,
-                    takeAwayOrder1, takeAwayOrder2, takeAwayOrder3));
+                    takeAwayOrder1, takeAwayOrder2, takeAwayOrder3, takeAwayOrder4));
 
             // Print the number of orders
             System.out.println("Orders");
