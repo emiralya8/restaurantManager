@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +13,7 @@ public class Booking {
     private String phoneNumber;
     private int peopleQty;
     private LocalDateTime date;
-    private List<TableRestaurant> tableRestaurants;
+    private TableRestaurant tableRestaurant;
     private boolean confirmed;
 
     // Custom toString method (optional, as @Data provides a default toString)
@@ -25,7 +24,7 @@ public class Booking {
                 "phoneNumber: " + phoneNumber + "\n"  +
                 "peopleQty: " + peopleQty +"\n"  +
                 "date: " + date +"\n"  +
-                "tables: " + tableRestaurants
+                "table: " + tableRestaurant
                 ;
     }
 }

@@ -1,16 +1,22 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TakeAwayOrder extends  Order {
+public class TakeAwayOrder extends OrderRestaurant {
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CUSTOMER_TA_FK_ID")
     private Customer customerTakeAway;
 
     // Constructor for TakeAwayOrder with the WHOLE DATA fields

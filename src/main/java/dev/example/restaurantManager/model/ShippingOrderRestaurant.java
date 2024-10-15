@@ -10,15 +10,15 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShippingOrder extends Order {
+public class ShippingOrderRestaurant extends OrderRestaurant {
 
     private String address;
     private String city;
     private String riderName;
 
-    public ShippingOrder(String id, Date date, String waiter, int peopleQty,
-                         double totalPayment, boolean paid, ArrayList<Menu> menus,
-                         String address, String city, String riderName) {
+    public ShippingOrderRestaurant(String id, Date date, String waiter, int peopleQty,
+                                   double totalPayment, boolean paid, ArrayList<Menu> menus,
+                                   String address, String city, String riderName) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.address = address;
         this.city = city;

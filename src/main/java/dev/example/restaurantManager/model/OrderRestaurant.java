@@ -3,20 +3,21 @@ package dev.example.restaurantManager.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+@Entity
+@Table(name = "ORDER_RESTAURANT")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class OrderRestaurant {
 
-
+    @Id
     private String id;
     private Date date;
     private String waiter;

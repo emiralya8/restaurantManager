@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EatInOrder extends Order {
+public class EatInOrderRestaurant extends OrderRestaurant {
 
     private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
     //private TableRestaurant orderedTableRestaurant;
 
 
-    public EatInOrder(String id, Date date, String waiter, int peopleQty,
-                      double totalPayment, boolean paid, ArrayList<Menu> menus,
-                      ArrayList<TableRestaurant> tableRestaurants) {
+    public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
+                                double totalPayment, boolean paid, ArrayList<Menu> menus,
+                                ArrayList<TableRestaurant> tableRestaurants) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.tableRestaurants = tableRestaurants;
     }
