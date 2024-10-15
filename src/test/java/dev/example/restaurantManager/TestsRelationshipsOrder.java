@@ -17,6 +17,17 @@ public class TestsRelationshipsOrder {
             Menu menu2 = new Menu("Pizza Menu", 12.99, "Pizza and salad", true, false);
             Menu menu3 = new Menu("Salad Menu", 8.99, "Mixed salad and dressing", true, true);
 
+            // Create sample customers
+            Customer customer1 = new Customer("C1", "John", "john@email.com", "123-456-7890", 30, false, false);
+            Customer customer2 = new Customer("C2", "Sarah", "sarah@email.com", "234-567-8901", 25, true, false);
+            Customer customer3 = new Customer("C3", "Emily", "emily@email.com", "345-678-9012", 35, false, false);
+            Customer customer4 = new Customer("C4", "David", "david@email.com", "456-789-0123", 40, true, false);
+            Customer customer5 = new Customer("C5", "Anna", "anna@email.com", "567-890-1234", 28, false, false);
+            Customer customer6 = new Customer("C6", "Mark", "mark@email.com", "678-901-2345", 45, true, false);
+            Customer customer7 = new Customer("C7", "Paul", "paul@email.com", "789-012-3456", 33, false, false);
+            Customer customer8 = new Customer("C8", "Linda", "linda@email.com", "890-123-4567", 38, true, false);
+            Customer customer9 = new Customer("C9", "George", "george@email.com", "901-234-5678", 50, false, false);
+
             // Create sample tables
             TableRestaurant table1 = new TableRestaurant("T1", "Window Table", 4, false);
             TableRestaurant table2 = new TableRestaurant("T2", "Corner Table", 2, true);
@@ -32,9 +43,9 @@ public class TestsRelationshipsOrder {
             Order eatInOrder3 = new EatInOrder("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2, menu3, menu3)), new ArrayList<>(Arrays.asList(table1, table2)));
 
             // Create 3 TakeAwayOrder objects
-            Order takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Paul", 1, 10.99, true, new ArrayList<>(Arrays.asList(menu1)), "Alice");
-            Order takeAwayOrder2 = new TakeAwayOrder("TO2", new Date(), "Linda", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), "Bob");
-            Order takeAwayOrder3 = new TakeAwayOrder("TO3", new Date(), "George", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), "Charlie");
+            Order takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menu1)), customer7 );
+            Order takeAwayOrder2 = new TakeAwayOrder("TO2", new Date(), "Bob", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), customer8 );
+            Order takeAwayOrder3 = new TakeAwayOrder("TO3", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), customer9);
 
             // Create a list of all orders
             ArrayList<Order> orders = new ArrayList<Order>();

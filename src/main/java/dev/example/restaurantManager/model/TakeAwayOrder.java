@@ -11,11 +11,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class TakeAwayOrder extends  Order {
 
-    private String nameCustomerTakeAway;
+    private Customer nameCustomerTakeAway;
 
     public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
                          double totalPayment, boolean paid, ArrayList<Menu> menus,
-                         String nameCustomerTakeAway) {
+                         Customer nameCustomerTakeAway) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.nameCustomerTakeAway = nameCustomerTakeAway;
     }
