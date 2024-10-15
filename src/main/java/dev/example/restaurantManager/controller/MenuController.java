@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.model.Menu;
+import dev.example.restaurantManager.service.ICustomQueriesService;
 import dev.example.restaurantManager.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,9 @@ import java.util.List;
 public class MenuController {
     @Autowired
     private IService<Menu> menuService;
+
+    @Autowired
+    private ICustomQueriesService<Menu> menuCustomQueriesService;
 
     @GetMapping("/allMenus")
     public List<Menu> getAllMenus() {
@@ -32,4 +36,10 @@ public class MenuController {
     public void deleteMenu(@PathVariable String id) {
         menuService.deleteElement(id);
     }
+
+    @GetMapping("/allMenus/{content}")
+    public List<Menu> getAllMenusByContent(@PathVariable String content) {
+        return menuCustomQueriesService.getElementByContentDescription(content);
+    }
+
 }

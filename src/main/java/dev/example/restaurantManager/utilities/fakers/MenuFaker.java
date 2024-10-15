@@ -17,9 +17,9 @@ public class MenuFaker implements IFaker<Menu>{
     public Menu CreateObject(Menu object) {
         return new Menu(
                 UUID.randomUUID().toString(),
-                faker.name().fullName(),
-                faker.number().randomDouble(2, 18,130),
                 faker.food().dish(),
+                faker.number().randomDouble(2, 18,130),
+                faker.food().ingredient(),
                 true,
                 faker.random().nextBoolean()
         );
@@ -31,9 +31,9 @@ public class MenuFaker implements IFaker<Menu>{
         for (int i = 0; i < n; i++) {
             Menu menu = new Menu(
                     UUID.randomUUID().toString(),
-                    faker.name().fullName(),
-                    faker.number().randomDouble(2, 18,130),
                     faker.food().dish(),
+                    faker.number().randomDouble(2, 18,130),
+                    faker.food().ingredient(),
                     true,
                     faker.random().nextBoolean()
             );

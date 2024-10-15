@@ -1,8 +1,8 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.model.Menu;
 import dev.example.restaurantManager.repository.IMenuRepository;
+import dev.example.restaurantManager.repository.MenuEntityManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MenuService implements IService<Menu>{
+public class MenuService implements IService<Menu>, ICustomQueriesService<Menu>{
 
     @Autowired
     private IMenuRepository menuRepository;
+
+    @Autowired
+    private MenuEntityManagerRepository alternativeMenuRepository;
+
+    @Autowired
+    private MenuEntityManagerRepository menuEntityManagerRepository;
 
     @Override
     public List<Menu> getAllElements() {
@@ -66,5 +72,10 @@ public class MenuService implements IService<Menu>{
     @Override
     public long countElements() {
         return 0;
+    }
+
+    @Override
+    public List<Menu> getElementByContentDescription(String contentDescription) {
+        return menuRepository.findByContent(contentDescription);
     }
 }
