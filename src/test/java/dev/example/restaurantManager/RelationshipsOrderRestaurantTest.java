@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class TestsRelationshipsOrderRestaurant {
+public class RelationshipsOrderRestaurantTest {
 
 @Autowired
 private TakeAwayOrderRepository takeAwayOrderRepository;
@@ -77,12 +77,23 @@ private CustomerRepository customerRepository;
                 System.out.println("--------------------");
             }
 
-
+            // Save the customer with JPA Repository to use in order T11
             customerRepository.save(customer1);
+            // let's create an order to save and test
+            // we do not create orderToSave as OrderRestaurant but
+            // as TakeAwayOrder to AVOID casting because
+            // in this test is easier to work with
+            TakeAwayOrder orderToSave = new TakeAwayOrder(
+                    "T11", new Date(), "Alice", 1, 10.99,
+                    true, new ArrayList<>(Arrays.asList(menu1)), null );
+            // we assign the customer to the order
+            //((TakeAwayOrder) orderToSave).setCustomerTakeAway(customer1);
+            orderToSave.setCustomerTakeAway(customer1);
+            // Save the order with JPA Repository
+            //takeAwayOrderRepository.save(orderToSave);
+            takeAwayOrderRepository.save(orderToSave);
 
-            takeAwayOrderRepository.save(new TakeAwayOrder(
-                   "T11", new Date(), "Alice", 1, 10.99,
-                    true, new ArrayList<>(Arrays.asList(menu1)), customer1 ));
+
             // when
             Optional<TakeAwayOrder> found = takeAwayOrderRepository.findById("T11");
             System.out.println("--------------------");
