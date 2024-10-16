@@ -17,7 +17,7 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
     private String riderName;
 
     public ShippingOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                   double totalPayment, boolean paid, ArrayList<Menu> menus,
+                                   double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
                                    String address, String city, String riderName) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.address = address;

@@ -1,6 +1,5 @@
 package dev.example.restaurantManager.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +20,7 @@ public class TakeAwayOrder extends OrderRestaurant {
 
     // Constructor for TakeAwayOrder with the WHOLE DATA fields
     public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
-                         double totalPayment, boolean paid, ArrayList<Menu> menus,
+                         double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
                          Customer customerTakeAway) {
 
         // THIS PART is SUPERCLASS

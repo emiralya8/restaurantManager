@@ -6,7 +6,7 @@ import dev.example.restaurantManager.repository.TakeAwayOrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,9 +25,9 @@ private CustomerRepository customerRepository;
     @Test
     public void TestCreateOrder() {
             // Create sample menus
-            Menu menu1 = new Menu("Burger Menu", 10.99, "Burger, fries, and drink", true, true);
-            Menu menu2 = new Menu("Pizza Menu", 12.99, "Pizza and salad", true, false);
-            Menu menu3 = new Menu("Salad Menu", 8.99, "Mixed salad and dressing", true, true);
+            MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
+            MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false);
+            MenuRestaurant menu3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true);
 
             // Create sample customers
             Customer customer1 = new Customer("C1", "John", "john@email.com", "123-456-7890", 30, false, false);
@@ -45,20 +45,20 @@ private CustomerRepository customerRepository;
             TableRestaurant table2 = new TableRestaurant("T2", "Corner Table", 2, true);
 
             // Create 3 ShippingOrder objects
-            OrderRestaurant shippingOrder1 = new ShippingOrderRestaurant("SO1", new Date(), "John", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu1, menu1)), "123 Main St", "New York", "Mike");
-            OrderRestaurant shippingOrder2 = new ShippingOrderRestaurant("SO2", new Date(), "Sarah", 1, 12.99, true, new ArrayList<>(Arrays.asList(menu2)), "456 Elm St", "Los Angeles", "Tom");
-            OrderRestaurant shippingOrder3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 32.97, false, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), "789 Oak St", "Chicago", "Lisa");
+            OrderRestaurant shippingOrder1 = new ShippingOrderRestaurant("SO1", new Date(), "John", 2, 21.98, false, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1)), "123 Main St", "New York", "Mike");
+            OrderRestaurant shippingOrder2 = new ShippingOrderRestaurant("SO2", new Date(), "Sarah", 1, 12.99, true, new ArrayList<>(Arrays.asList(menuRestaurant2)), "456 Elm St", "Los Angeles", "Tom");
+            OrderRestaurant shippingOrder3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 32.97, false, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menu3)), "789 Oak St", "Chicago", "Lisa");
 
             // Create 3 EatInOrder objects
-            OrderRestaurant eatInOrder1 = new EatInOrderRestaurant("EO1", new Date(), "David", 4, 43.96, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2)), new ArrayList<>(Arrays.asList(table1)));
-            OrderRestaurant eatInOrder2 = new EatInOrderRestaurant("EO2", new Date(), "Anna", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), new ArrayList<>(Arrays.asList(table2)));
-            OrderRestaurant eatInOrder3 = new EatInOrderRestaurant("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2, menu3, menu3)), new ArrayList<>(Arrays.asList(table1, table2)));
+            OrderRestaurant eatInOrder1 = new EatInOrderRestaurant("EO1", new Date(), "David", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1, menuRestaurant2, menuRestaurant2)), new ArrayList<>(Arrays.asList(table1)));
+            OrderRestaurant eatInOrder2 = new EatInOrderRestaurant("EO2", new Date(), "Anna", 2, 21.98, false, new ArrayList<>(Arrays.asList(menuRestaurant2, menu3)), new ArrayList<>(Arrays.asList(table2)));
+            OrderRestaurant eatInOrder3 = new EatInOrderRestaurant("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1, menuRestaurant2, menuRestaurant2, menu3, menu3)), new ArrayList<>(Arrays.asList(table1, table2)));
 
             // Create 3 TakeAwayOrder objects
-            OrderRestaurant takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menu1)), customer1 );
-            OrderRestaurant takeAwayOrder2 = new TakeAwayOrder("TO2", new Date(), "Bob", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), customer3 );
-            OrderRestaurant takeAwayOrder3 = new TakeAwayOrder("TO3", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), customer5);
-            OrderRestaurant takeAwayOrder4 = new TakeAwayOrder("TO4", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menu1, menu2, menu3, menu3, menu3, menu3)), customer9);
+            OrderRestaurant takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menuRestaurant1)), customer1 );
+            OrderRestaurant takeAwayOrder2 = new TakeAwayOrder("TO2", new Date(), "Bob", 2, 21.98, false, new ArrayList<>(Arrays.asList(menuRestaurant2, menu3)), customer3 );
+            OrderRestaurant takeAwayOrder3 = new TakeAwayOrder("TO3", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menu3)), customer5);
+            OrderRestaurant takeAwayOrder4 = new TakeAwayOrder("TO4", new Date(), "Charlie", 3, 32.97, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menu3, menu3, menu3, menu3)), customer9);
 
             // Create a list of all orders
             ArrayList<OrderRestaurant> orders = new ArrayList<>();
@@ -85,7 +85,7 @@ private CustomerRepository customerRepository;
             // in this test is easier to work with
             TakeAwayOrder orderToSave = new TakeAwayOrder(
                     "T11", new Date(), "Alice", 1, 10.99,
-                    true, new ArrayList<>(Arrays.asList(menu1)), null );
+                    true, new ArrayList<>(Arrays.asList(menuRestaurant1)), null );
             // we assign the customer to the order
             //((TakeAwayOrder) orderToSave).setCustomerTakeAway(customer1);
             orderToSave.setCustomerTakeAway(customer1);

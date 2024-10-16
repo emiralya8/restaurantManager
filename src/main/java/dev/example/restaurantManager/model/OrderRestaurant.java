@@ -24,7 +24,7 @@ public class OrderRestaurant {
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Menu> menus = new ArrayList<>();
+    private ArrayList<MenuRestaurant> menus = new ArrayList<>();
 
     @Override
     public String toString() {
