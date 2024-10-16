@@ -2,6 +2,7 @@ package dev.example.restaurantManager.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,19 +25,44 @@ public class OrderRestaurant {
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<MenuRestaurant> menus = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_menu",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_id")
+    )
+    private List<MenuRestaurant> menus = new ArrayList<>();
+
+    public void addMenu(MenuRestaurant menu) {
+        this.menus.add(menu);
+        menu.getOrders().add(this);
+    }
+
+    public void removeMenu(MenuRestaurant menu) {
+        this.menus.remove(menu);
+        menu.getOrders().remove(this);
+    }
+
+    public List<MenuRestaurant> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<MenuRestaurant> menus) {
+        this.menus = menus;
+    }
 
     @Override
     public String toString() {
-        return
-                "date: " + date + "\n"  +
-                "waiter: " + waiter  + "\n"  +
-                "peopleQty: " + peopleQty +"\n"  +
-                "totalPayment: " + totalPayment +" euros\n"  +
-                "paid: " + paid +"\n"  +
-                "Menus quantity: " + menus.size() +"\n"  +
-                "menus: " + menus
-                ;
+        return "OrderRestaurant{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", waiter='" + waiter + '\'' +
+                ", peopleQty=" + peopleQty +
+                ", totalPayment=" + totalPayment +
+                ", paid=" + paid +
+                ", menusCount=" + (menus != null ? menus.size() : 0) +
+                '}';
     }
 
 }
