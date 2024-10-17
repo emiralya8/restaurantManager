@@ -20,9 +20,6 @@ public class MenuService implements IService<Menu>, ICustomQueriesService<Menu>{
     @Autowired
     private MenuEntityManagerRepository alternativeMenuRepository;
 
-    @Autowired
-    private MenuEntityManagerRepository menuEntityManagerRepository;
-
     @Override
     public List<Menu> getAllElements() {
         return menuRepository.findAll();
