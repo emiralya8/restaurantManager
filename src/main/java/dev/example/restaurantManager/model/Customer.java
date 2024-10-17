@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,9 +20,4 @@ public class Customer {
     private int age;
     private boolean vipCustomer;
     private boolean deleted;
-
-    // annotations
-    //@OneToMany(mappedBy = "customerTakeAway", cascade = CascadeType.ALL)
-    //private ArrayList<TakeAwayOrder> takeAwayOrders = new ArrayList<>();
-
 }

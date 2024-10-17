@@ -1,6 +1,5 @@
 package dev.example.restaurantManager;
 
-
 import dev.example.restaurantManager.model.Booking;
 import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.BookingRepository;
@@ -8,11 +7,9 @@ import dev.example.restaurantManager.repository.TableRestaurantRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest

@@ -7,8 +7,6 @@ import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +27,6 @@ public class MenuRestaurant  {
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
-
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
         this.name = name;
@@ -38,7 +35,6 @@ public class MenuRestaurant  {
         this.active = active;
         this.water = water;
     }
-
 
     //We  might want to exclude 'orders' from toString() to avoid circular references
     @Override

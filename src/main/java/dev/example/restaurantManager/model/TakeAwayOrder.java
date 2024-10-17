@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class TakeAwayOrder extends OrderRestaurant {
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_TA_FK_ID")
     private Customer customerTakeAway;

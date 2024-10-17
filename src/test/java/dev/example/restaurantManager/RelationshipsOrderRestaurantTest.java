@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -114,7 +113,7 @@ private OrderRestaurantRepository orderRestaurantRepository;
             System.out.println("--------------------");
     }
 
-        @Test
+    @Test
     public void TestCreateOrderMenu () {
             MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
             MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false, null);
@@ -123,7 +122,7 @@ private OrderRestaurantRepository orderRestaurantRepository;
             menuRestaurantRepository.save(menuRestaurant1);
             menuRestaurantRepository.save(menuRestaurant2);
             menuRestaurantRepository.save(menuRestaurant3);
-            // Create 3 Order objects and assgn menus
+            // Create 3 Order objects and assign menus
             OrderRestaurant orderRestaurant1 = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
             OrderRestaurant orderRestaurant2 = new OrderRestaurant("O02", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant3)));
             OrderRestaurant orderRestaurant3 = new OrderRestaurant("O03", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant2)));

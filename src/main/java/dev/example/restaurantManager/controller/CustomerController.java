@@ -34,15 +34,6 @@ public class CustomerController {
         List<Customer> customers = customerService.getAllCustomers();
         HttpHeaders headers = getCommonHeaders("Get all customers");
 
-        /*if (customers != null && !customers.isEmpty()) {
-            return new ResponseEntity<>(customers, headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        }*/
-
-        // Ternary operator is concise, reduces code clutter, improves readability
-        // and efficiently handles simple conditional returns in a single line.
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
         return customers != null && !customers.isEmpty()
                 ? new ResponseEntity<>(customers, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
