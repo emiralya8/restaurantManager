@@ -2,6 +2,7 @@ package dev.example.restaurantManager.utilities.fakers;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.repository.ICustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
