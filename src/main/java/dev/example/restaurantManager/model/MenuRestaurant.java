@@ -46,6 +46,8 @@ public class MenuRestaurant  {
                 ", content='" + content + '\'' +
                 ", active=" + active +
                 ", water=" + water +
+                ", ordersCount=" + (orders != null ? orders.size() : 0) +
+                ", orders=" + orders +
                 '}';
     }
 
