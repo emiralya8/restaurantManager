@@ -2,6 +2,7 @@ package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.repository.ICustomerRepository;
+import dev.example.restaurantManager.repository.RepositoryManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,18 @@ import java.util.Optional;
 @Service
 public class CustomerService implements IService<Customer>{
 
+    /*
     @Autowired
     private ICustomerRepository customerRepository;
+    */
+    private final RepositoryManagerFactory repositoryManagerFactory;
+    private final ICustomerRepository customerRepository;
+
+    @Autowired
+    public CustomerService(RepositoryManagerFactory repositoryManagerFactory) {
+        this.repositoryManagerFactory = repositoryManagerFactory;
+        this.customerRepository = (ICustomerRepository) repositoryManagerFactory.getRepository(new Customer());
+    }
 
     @Override
     public List<Customer> getAllElements() {

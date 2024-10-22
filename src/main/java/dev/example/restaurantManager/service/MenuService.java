@@ -1,10 +1,9 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Menu;
+import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.repository.IMenuRepository;
 import dev.example.restaurantManager.repository.MenuEntityManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MenuService implements IService<Menu>, ICustomQueriesService<Menu>{
+public class MenuService implements IService<MenuRestaurant>, ICustomQueriesService<MenuRestaurant>{
 
     @Autowired
     private IMenuRepository menuRepository;
@@ -21,24 +20,24 @@ public class MenuService implements IService<Menu>, ICustomQueriesService<Menu>{
     private MenuEntityManagerRepository alternativeMenuRepository;
 
     @Override
-    public List<Menu> getAllElements() {
+    public List<MenuRestaurant> getAllElements() {
         return menuRepository.findAll();
     }
 
     @Override
-    public Menu createElement(Menu element) {
+    public MenuRestaurant createElement(MenuRestaurant element) {
         return menuRepository.save(element);
     }
 
     @Override
-    public Menu getElementById(String id) {
+    public MenuRestaurant getElementById(String id) {
         return menuRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Menu updateElement(String id, Menu eDetails) {
+    public MenuRestaurant updateElement(String id, MenuRestaurant eDetails) {
         boolean isTrue = false;
-        Menu menuElement = menuRepository.findById(id).orElse(null);
+        MenuRestaurant menuElement = menuRepository.findById(id).orElse(null);
         if(menuElement != null){
             Field[] fields = menuElement.getClass().getDeclaredFields();
             for (Field field : fields) {
@@ -61,7 +60,7 @@ public class MenuService implements IService<Menu>, ICustomQueriesService<Menu>{
     @Override
     public boolean deleteElement(String id) {
         menuRepository.deleteById(id);
-        Optional<Menu> menu = menuRepository.findById(id);
+        Optional<MenuRestaurant> menu = menuRepository.findById(id);
         return menu.isEmpty()
                 ? false : true ;
     }
@@ -72,7 +71,7 @@ public class MenuService implements IService<Menu>, ICustomQueriesService<Menu>{
     }
 
     @Override
-    public List<Menu> getElementByContentDescription(String contentDescription) {
+    public List<MenuRestaurant> getElementByContentDescription(String contentDescription) {
         return menuRepository.findByContent(contentDescription);
     }
 }

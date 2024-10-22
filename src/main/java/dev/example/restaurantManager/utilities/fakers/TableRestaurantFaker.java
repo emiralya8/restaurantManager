@@ -17,7 +17,6 @@ public class TableRestaurantFaker implements IFaker<TableRestaurant>{
         return new TableRestaurant(
                 UUID.randomUUID().toString(),
                 faker.funnyName().name(),
-                faker.funnyName().name().toString(),
                 faker.number().numberBetween(1,7),
                 faker.random().nextBoolean()
         );
@@ -30,7 +29,6 @@ public class TableRestaurantFaker implements IFaker<TableRestaurant>{
             TableRestaurant tableRestaurant = new TableRestaurant(
                     UUID.randomUUID().toString(),
                     faker.funnyName().name(),
-                    faker.funnyName().name().toString(),
                     faker.number().numberBetween(1,7),
                     faker.random().nextBoolean()
             );

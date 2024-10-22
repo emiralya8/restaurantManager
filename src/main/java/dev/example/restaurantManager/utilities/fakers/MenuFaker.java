@@ -1,21 +1,20 @@
 package dev.example.restaurantManager.utilities.fakers;
 
 import com.github.javafaker.Faker;
-import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.model.Menu;
+import dev.example.restaurantManager.model.MenuRestaurant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-public class MenuFaker implements IFaker<Menu>{
+public class MenuFaker implements IFaker<MenuRestaurant>{
 
     private final Faker faker = new Faker(new Locale("en-US"));
 
     @Override
-    public Menu CreateObject(Menu object) {
-        return new Menu(
+    public MenuRestaurant CreateObject(MenuRestaurant object) {
+        return new MenuRestaurant(
                 UUID.randomUUID().toString(),
                 faker.food().dish(),
                 faker.number().randomDouble(2, 18,130),
@@ -26,10 +25,10 @@ public class MenuFaker implements IFaker<Menu>{
     }
 
     @Override
-    public List<Menu> GetNObjects(int n) {
-        List<Menu> lstMenu = new ArrayList<Menu>();
+    public List<MenuRestaurant> GetNObjects(int n) {
+        List<MenuRestaurant> lstMenu = new ArrayList<MenuRestaurant>();
         for (int i = 0; i < n; i++) {
-            Menu menu = new Menu(
+            MenuRestaurant menu = new MenuRestaurant(
                     UUID.randomUUID().toString(),
                     faker.food().dish(),
                     faker.number().randomDouble(2, 18,130),

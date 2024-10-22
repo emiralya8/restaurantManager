@@ -31,10 +31,10 @@ public class Booking {
     public String toString() {
         return
                 "name: " + name + "\n"  +
-                "phoneNumber: " + phoneNumber + "\n"  +
-                "peopleQty: " + peopleQty +"\n"  +
-                "date: " + date +"\n"  +
-                "table: " + tableRestaurantMapped
+                        "phoneNumber: " + phoneNumber + "\n"  +
+                        "peopleQty: " + peopleQty +"\n"  +
+                        "date: " + date +"\n"  +
+                        "table: " + tableRestaurantMapped
                 ;
     }
 }

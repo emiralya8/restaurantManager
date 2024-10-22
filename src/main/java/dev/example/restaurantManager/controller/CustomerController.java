@@ -23,6 +23,7 @@ public class CustomerController {
     @Autowired
     private IService<Customer> customerService;
 
+    @Autowired
     private ICustomerRepository customerRepository;
 
     @GetMapping("/show-endpoint")
