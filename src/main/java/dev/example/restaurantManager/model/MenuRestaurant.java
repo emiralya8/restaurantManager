@@ -8,9 +8,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -48,6 +48,26 @@ public class MenuRestaurant  {
                 ", active=" + active +
                 ", water=" + water +
                 '}';
+    }
+
+    // Updated equals() method to compare all fields except 'orders'
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MenuRestaurant)) return false;
+        MenuRestaurant that = (MenuRestaurant) o;
+        return active == that.active &&
+                water == that.water &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(content, that.content);
+    }
+
+    // Updated hashCode() method to include all fields except 'orders'
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, content, active, water);
     }
 
 }

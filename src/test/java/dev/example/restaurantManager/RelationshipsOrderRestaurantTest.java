@@ -2,13 +2,10 @@ package dev.example.restaurantManager;
 
 import dev.example.restaurantManager.model.*;
 import dev.example.restaurantManager.repository.*;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -206,7 +203,8 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 menuRestaurantRepository.save(menuRestaurant3);
 
                 // Create an order and add menus
-                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>());
+                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4,
+                        43.96, true, new ArrayList<>());
                 order.addMenu(menuRestaurant1);
                 order.addMenu(menuRestaurant2);
                 order.addMenu(menuRestaurant3);
@@ -216,12 +214,12 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 Optional<OrderRestaurant> foundOrder = orderRestaurantRepository.findById("O01");
                 assertThat(foundOrder).isPresent();
                 assertThat(foundOrder.get().getMenus()).hasSize(3);
-                // Our MenuRestaurant class doesn't override equals() and hashCode() methods,
-                // Java will use the default implementation, which is based on object identity rather than field values.
-                // So, we can't use assertThat(foundOrder.get().getMenus()).contains(menuRestaurant1, menuRestaurant2, menuRestaurant3);
-                //assertThat(foundOrder.get().getMenus()).contains(menuRestaurant1, menuRestaurant2, menuRestaurant3);
-
-                // Instead, we can use
+                // Since we've implemented equals() and hashCode() methods based on
+                // the comparation of all fields except for orders.
+                // This avoids potential circular reference issues while still providing a comprehensive comparison of the menu items.
+                // we can now use contains() to check if the retrieved menus match the original ones
+                assertThat(foundOrder.get().getMenus()).contains(menuRestaurant1, menuRestaurant2, menuRestaurant3);
+                // Retrieve the menus and assert the order
                 assertThat(foundOrder.get().getMenus())
                         .extracting("id")
                         .containsExactlyInAnyOrder("M01", "M02", "M03");
@@ -243,7 +241,8 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 menuRestaurantRepository.save(menuRestaurant3);
 
                 // Create an order with multiple menus and save it
-                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
+                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4,
+                        43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
                 orderRestaurantRepository.save(order);
 
                 // Retrieve the order, remove a menu, and save the updated order
@@ -251,6 +250,7 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 assertThat(foundOrder).isPresent();
                 OrderRestaurant updatedOrder = foundOrder.get();
                 // Let's remove the second menu
+
                 //updatedOrder.removeMenu(menuRestaurant2);
                 updatedOrder.removeMenu(updatedOrder.getMenus().get(1));
                 orderRestaurantRepository.save(updatedOrder);
@@ -262,14 +262,43 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 // assert the menus have been removed
                 assertThat(updatedOrderOptional).isPresent();
                 assertThat(updatedOrderOptional.get().getMenus()).hasSize(2);
-                //assertThat(updatedOrderOptional.get().getMenus()).contains(menuRestaurant1, menuRestaurant3);
-                //assertThat(updatedOrderOptional.get().getMenus()).doesNotContain(menuRestaurant2);
+                assertThat(updatedOrderOptional.get().getMenus()).contains(menuRestaurant1, menuRestaurant3);
+                assertThat(updatedOrderOptional.get().getMenus()).doesNotContain(menuRestaurant2);
+        }
+
+        @Test
+        public void testRemovingMenusFromOrder_butNotRelationship() {
+                // Create sample menus and save them
+                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
+                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02", "Pizza Menu", 12.99, "Pizza and salad", true, false);
+                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03", "Salad Menu", 8.99, "Mixed salad and dressing", true, true);
+                menuRestaurantRepository.save(menuRestaurant1);
+                menuRestaurantRepository.save(menuRestaurant2);
+                menuRestaurantRepository.save(menuRestaurant3);
+
+                // Create an order with multiple menus and save it
+                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4,
+                        43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
+                orderRestaurantRepository.save(order);
+
+                // Let's remove the second menu
+                menuRestaurantRepository.delete(menuRestaurant2);
+
+
+                // Retrieve the updated order and assert the menus
+                Optional<OrderRestaurant> updatedOrderOptional = orderRestaurantRepository.findById("O01");
+                // print the menus
+                System.out.println("Menus: " + updatedOrderOptional.get().getMenus());
+                // assert the menus have been removed
+                assertThat(updatedOrderOptional).isPresent();
+                assertThat(updatedOrderOptional.get().getMenus()).hasSize(2);
+
         }
 
 
-        /*// Cascading Deletion of Menus and Orders: Ensures that the deletion of a menu
+        // Cascading Deletion of Menus and Orders: Ensures that the deletion of a menu
         // or an order correctly cascades to the associated records in the order-menu join table.
-        @Test
+        /*@Test
         public void testCascadingDeletionOfMenusAndOrders() {
                 // Create sample menus and save them
                 MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
@@ -280,11 +309,17 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 menuRestaurantRepository.save(menuRestaurant3);
 
                 // Create an order with multiple menus and save it
-                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
+                OrderRestaurant order = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true,
+                        new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
                 orderRestaurantRepository.save(order);
 
                 // Delete the menu and verify the cascade deletion of the order-menu association
-                menuRestaurantRepository.delete(menuRestaurant2);
+                Optional<OrderRestaurant> foundOrder = orderRestaurantRepository.findById("O01");
+                assertThat(foundOrder).isPresent();
+                OrderRestaurant updatedOrder = foundOrder.get();
+                updatedOrder.removeMenu(menuRestaurant2);
+                //menuRestaurantRepository.delete(menuRestaurant2);
+                orderRestaurantRepository.save(updatedOrder);
                 Optional<OrderRestaurant> updatedOrderOptional = orderRestaurantRepository.findById("O01");
                 assertThat(updatedOrderOptional).isPresent();
                 assertThat(updatedOrderOptional.get().getMenus()).hasSize(2);
@@ -302,11 +337,11 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 assertThat(menuRestaurant1Optional.get().getOrders()).isEmpty();
                 assertThat(menuRestaurant2Optional.get().getOrders()).isEmpty();
                 assertThat(menuRestaurant3Optional.get().getOrders()).isEmpty();
-        }
+        }*/
 
         // Adding Menus to an EatInOrder: Verifies that menus can be added
         // to an EatInOrderRestaurant and the association is correctly persisted in the database.
-        @Test
+        /*@Test
         public void testAddingMenusToEatInOrder() {
                 // Create sample menus and save them
                 MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
