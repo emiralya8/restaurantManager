@@ -36,6 +36,7 @@ public class BookingTableManyToManyTest {
         c1.setAge(30);
         c1.setVipCustomer(false);
         c1.setDeleted(false);
+        c1.setBookings(new ArrayList<Booking>());
         // save customer c1
         customerRepository.save(c1);
 
@@ -87,5 +88,17 @@ public class BookingTableManyToManyTest {
         System.out.println("Bookings Table: " );
         System.out.println("--------------------");
         System.out.println(tableFound.get().getBookings());
+
+        // add booking to customer
+        c1.addBooking(b1);
+        c1.addBooking(b2);
+        customerRepository.save(c1);
+        Optional<Customer> customerFound = customerRepository.findById("C1");
+        System.out.println( '\n' + "Customer: " + customerFound.get());
+        System.out.println("--------------------");
+        System.out.println("Bookings Customer: " );
+        System.out.println("--------------------");
+        System.out.println(customerFound.get().getBookings());
+
     }
 }
