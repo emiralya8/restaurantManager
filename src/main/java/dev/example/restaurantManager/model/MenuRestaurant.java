@@ -37,7 +37,8 @@ public class MenuRestaurant  {
         this.water = water;
     }
 
-    //We  might want to exclude 'orders' from toString() to avoid circular references
+    //We  might want to exclude 'orders' from toString()
+    // to avoid circular references
     @Override
     public String toString() {
         return "MenuRestaurant{" +
@@ -51,6 +52,7 @@ public class MenuRestaurant  {
     }
 
     // Updated equals() method to compare all fields except 'orders'
+    // to avoid circular references
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -34,7 +34,8 @@ public class TableRestaurant {
     //method to add
     public void addBooking(Booking booking) {
         this.getBookings().add(booking);
-        if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
+        if (booking.getTableRestaurantMapped() != null)
+            booking.getTableRestaurantMapped().getBookings().remove(booking);
         booking.setTableRestaurantMapped(this);
     }
 
