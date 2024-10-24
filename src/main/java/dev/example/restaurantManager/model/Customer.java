@@ -22,18 +22,24 @@ public class Customer {
     private boolean vipCustomer;
     private boolean deleted;
     
-    @OneToMany(mappedBy = "customerMapped", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerMapped", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private ArrayList<Booking> bookings;
 
-    public Customer(String number, String alex, String mail, String number1,
-                    int i, boolean b, boolean b1) {
+    public Customer(String id, String name, String email, String phoneNumber,
+                    int age, boolean vipCustomer, boolean deleted) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.age = age;
+        this.vipCustomer = vipCustomer;
+        this.deleted = deleted;
     }
 
     //method to add
     public void addBooking(Booking booking) {
         this.getBookings().add(booking);
-        if (booking.getCustomerMapped() != null)
-            booking.getCustomerMapped().getBookings().remove(booking);
         booking.setCustomerMapped(this);
     }
     

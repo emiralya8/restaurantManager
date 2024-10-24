@@ -9,6 +9,9 @@ import dev.example.restaurantManager.repository.TableRestaurantRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -43,6 +46,7 @@ public class BookingTableManyToManyTest {
         tr1.setDescription("Table 01 for 4 people outdoors");
         tr1.setQty(4);
         tr1.setBusy(false);
+        tr1.setBookings(new ArrayList<Booking>());
         // save table restaurant tr1
         tableRestaurantRepository.save(tr1);
 
@@ -73,12 +77,15 @@ public class BookingTableManyToManyTest {
         bookingRepository.findById("BO03").ifPresent(System.out::println);
 
         // add booking to table
-        //tr1.addBooking(b1);
-        //tr1.addBooking(b2);
-        //tableRestaurantRepository.save(tr1);
+        tr1.addBooking(b1);
+        tr1.addBooking(b2);
+        tableRestaurantRepository.save(tr1);
         Optional<TableRestaurant> tableFound = tableRestaurantRepository.findById("TR01");
         System.out.println("Table: " + tableFound.get());
-        // bookings field is null
-        System.out.println("Bookings Table: " + tableFound.get().getBookings());
+        // bookings field is now NOT null
+        System.out.println("--------------------");
+        System.out.println("Bookings Table: " );
+        System.out.println("--------------------");
+        System.out.println(tableFound.get().getBookings());
     }
 }
