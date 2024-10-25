@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class Customer {
     
     @OneToMany(mappedBy = "customerMapped", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private ArrayList<Booking> bookings;
+    private List<Booking> bookings;
 
     public Customer(String id, String name, String email, String phoneNumber,
                     int age, boolean vipCustomer, boolean deleted) {
