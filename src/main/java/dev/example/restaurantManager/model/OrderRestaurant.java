@@ -14,6 +14,7 @@ import lombok.*;
 @Entity
 @Table(name = "ORDER_RESTAURANT")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "order_type")
 public class OrderRestaurant {
 
     @Id
