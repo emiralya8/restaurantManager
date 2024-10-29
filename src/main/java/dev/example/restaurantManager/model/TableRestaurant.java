@@ -32,7 +32,16 @@ public class TableRestaurant {
         this.busy = busy;
     }
 
-    //method to add
+    // we must create a VERY CONCRETE constructor to RUN the OLD tests
+    public TableRestaurant(String id,String name, String description, int qty, boolean busy) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.qty = qty;
+        this.busy = busy;
+    }
+
+        //method to add
     public void addBooking(Booking booking) {
         if (bookings == null) {
             bookings = new ArrayList<>();
