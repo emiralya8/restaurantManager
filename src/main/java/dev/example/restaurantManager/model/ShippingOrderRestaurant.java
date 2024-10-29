@@ -1,27 +1,34 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShippingOrderRestaurant extends OrderRestaurant {
 
     private String address;
-    private String city;
-    private String riderName;
+    private String phoneNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CUSTOMER_SHIPPING_FK_ID")
+    private Customer customerShipping;
+
+    // Constructor for ShippingOrderRestaurant with all fields
     public ShippingOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                   double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
-                                   String address, String city, String riderName) {
-        super(id, date, waiter, peopleQty, totalPayment, paid, menus);
+                                   double totalPayment, boolean paid, List<OrderMenuQty> orderMenuQties,
+                                   String address, String phoneNumber, Customer customerShipping) {
+        super(id, date, waiter, peopleQty, totalPayment, paid);
+        this.setOrderMenuQties(orderMenuQties);
         this.address = address;
-        this.city = city;
-        this.riderName = riderName;
+        this.phoneNumber = phoneNumber;
+        this.customerShipping = customerShipping;
     }
 
     @Override
@@ -29,7 +36,7 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
         return super.toString() + "\n" +
                 "Type: Shipping\n" +
                 "Address: " + address + "\n" +
-                "City: " + city + "\n" +
-                "Rider Name: " + riderName;
+                "Phone Number: " + phoneNumber + "\n" +
+                "Customer: " + customerShipping;
     }
 }

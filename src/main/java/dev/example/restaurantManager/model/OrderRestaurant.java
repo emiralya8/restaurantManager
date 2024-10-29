@@ -24,27 +24,34 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY
-            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "ORDER_RESTAURANT_MENU",
-            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
-    )
-    private List<MenuRestaurant> menus = new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderMenuQty> orderMenuQties;
 
-    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-            this.menus.add(menu);
-            menu.getOrders().add(this);
-        return this.menus;
+
+    // Constructor without orderMenuQties
+    public OrderRestaurant(String id, Date date, String waiter, int peopleQty, double totalPayment, boolean paid) {
+        this.id = id;
+        this.date = date;
+        this.waiter = waiter;
+        this.peopleQty = peopleQty;
+        this.totalPayment = totalPayment;
+        this.paid = paid;
     }
 
-    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-            this.menus.remove(menu);
-            menu.getOrders().remove(this);
-        return this.menus;
+    // Method to add a menu to the order
+    public void addMenu(MenuRestaurant menu, int quantity) {
+        OrderMenuQty orderMenuQty = new OrderMenuQty();
+        orderMenuQty.setOrder(this);
+        orderMenuQty.setMenu(menu);
+        orderMenuQty.setQuantity(quantity);
+        this.orderMenuQties.add(orderMenuQty);
     }
+
+    // Method to remove a menu from the order
+    public void removeMenu(MenuRestaurant menu) {
+        this.orderMenuQties.removeIf(omq -> omq.getMenu().equals(menu));
+    }
+
 
     @Override
     public String toString() {
@@ -55,8 +62,7 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
+                ", orderMenuQties=" + orderMenuQties +
                 '}';
     }
 
