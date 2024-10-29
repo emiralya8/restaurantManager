@@ -1,10 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,14 @@ public class MenuRestaurant  {
     @JsonIgnore
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "MENU_RESTAURANT_MENU_ITEM",
+            joinColumns = @JoinColumn(name = "MENU_RESTAURANT_ID_FK"),
+            inverseJoinColumns = @JoinColumn(name = "MENU_ITEM_ID_FK")
+    )
+    private List<MenuItem> menuItems;
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
