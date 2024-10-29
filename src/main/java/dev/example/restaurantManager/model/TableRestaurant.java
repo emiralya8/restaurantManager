@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class TableRestaurant {
 
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL,
        fetch = FetchType.EAGER)
-    private ArrayList<Booking> bookings ;
+    private List<Booking> bookings ;
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
     public TableRestaurant(String name, String description, int qty, boolean busy) {
