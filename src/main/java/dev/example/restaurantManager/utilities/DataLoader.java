@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class DataLoader {
@@ -33,6 +34,9 @@ public class DataLoader {
     // load fake data into the local H2 database
     // and create relationships between entities in the database
     public void loadAllData() {
+        // let's create some fake data
+        // for the inverse entities first
+        // then create relationships between them
         createCustomers();
         createTables();
         createMenuItems();
@@ -46,6 +50,7 @@ public class DataLoader {
     }
 
     // we are going to create 25 customers
+    // and save them in the H2 local database
     private void createCustomers() {
         for (int i = 0; i < 25; i++) {
             Customer customer = new Customer(
@@ -62,12 +67,16 @@ public class DataLoader {
     }
 
     // we are going to create 10 tables
+    // and save them in the H2 local database
     private void createTables() {
         for (int i = 0; i < 10; i++) {
             TableRestaurant table = new TableRestaurant(
                     UUID.randomUUID().toString(),
-                    faker.name().fullName(),
-                    faker.lorem().sentence(),
+                    " Table-00" + (i + 1),
+                    faker.options().option("Table Type Outdoor from Cisco INC",
+                            "Table Type Indoor from Cisco INC",
+                            "Table Rounded Big",
+                            "Table Little Indoor"),
                     faker.random().nextInt(2, 8),
                     faker.bool().bool()
             );
@@ -76,6 +85,7 @@ public class DataLoader {
     }
 
     // we are going to create 25 menu items
+    // and save them in the H2 local database
     private void createMenuItems() {
         for (int i = 0; i < 25; i++) {
             MenuItem menuItem = new MenuItem(
@@ -96,7 +106,7 @@ public class DataLoader {
         for (int i = 0; i < 15; i++) {
             MenuRestaurant menu = new MenuRestaurant(
                     UUID.randomUUID().toString(),
-                     " Menu-00" + i,
+                     " Menu-00" + (i + 1),
                     faker.lorem().paragraph()
             );
             List<MenuItem> menuItems = new ArrayList<>(faker.random().nextInt(5, 10));
@@ -116,13 +126,15 @@ public class DataLoader {
         List<Customer> customers = customerRepository.findAll();
         List<TableRestaurant> tables = tableRepository.findAll();
         for (int i = 0; i < 25; i++) {
-            Booking booking = new Booking(
-                    UUID.randomUUID().toString(),
-                    faker.random().nextInt(1, 8),
-                    new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()),
-                    new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()),
-                    faker.options().option("Lunch", "Dinner")
-            );
+            Booking booking = new Booking();
+            // set all fields except 'orders'
+            booking.setId(UUID.randomUUID().toString());
+            booking.setShift(faker.options().option("Lunch", "Dinner"));
+            booking.setDate(new Date());
+            booking.setPeopleQty( faker.random().nextInt(1, 8));
+            // set date in the future
+            booking.setBookingDate(faker.date().future(faker.random().nextInt(1, 400), TimeUnit.DAYS));
+            // set customer and table
             booking.setCustomerMapped(customers.get(faker.random().nextInt(customers.size())));
             booking.setTableRestaurantMapped(tables.get(faker.random().nextInt(tables.size())));
             bookingRepository.save(booking);
@@ -137,7 +149,7 @@ public class DataLoader {
         for (int i = 0; i < 45; i++) {
             OrderRestaurant order = new OrderRestaurant(
                     UUID.randomUUID().toString(),
-                    new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()),
+                    new Date(),
                     faker.name().fullName(),
                     faker.random().nextInt(1, 8),
                     faker.number().randomDouble(2, 5, 50),
@@ -146,13 +158,21 @@ public class DataLoader {
 
             List<OrderMenuQty> orderMenuQties = new ArrayList<>();
             for (int j = 0; j < faker.random().nextInt(1, 5); j++) {
+                // create order menu quantities for each order
+                // to create a many-to-many relationship
                 OrderMenuQty orderMenuQty = new OrderMenuQty();
+                // set order and menu
                 orderMenuQty.setId(UUID.randomUUID().toString());
                 orderMenuQty.setOrder(order);
                 orderMenuQty.setMenu(menus.get(faker.random().nextInt(menus.size())));
+                // set quantity
                 orderMenuQty.setQuantity(faker.random().nextInt(1, 5));
+                // add to list
                 orderMenuQties.add(orderMenuQty);
             }
+            // set order menu quantities for each order
+            // to create a many-to-many relationship
+            // that is, one order will have the same menus repeated
             order.setOrderMenuQties(orderMenuQties);
             orderRepository.save(order);
         }
