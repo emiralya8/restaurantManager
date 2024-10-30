@@ -27,7 +27,12 @@ public class DataLoader {
     private OrderRestaurantRepository orderRepository;
     @Autowired
     private OrderMenuQtyRepository orderMenuQtyRepository;
-
+    @Autowired
+    private EatInOrderRestaurantRepository eatInOrderRepository;
+    @Autowired
+    private ShippingOrderRepository shippingOrderRepository;
+    @Autowired
+    private TakeAwayOrderRepository takeAwayOrderRepository;
     private final Faker faker = new Faker(new Locale("en-US"));
 
     // master method orchestrating all other methods to
@@ -47,6 +52,11 @@ public class DataLoader {
         createBookingsAndAssignTablesAndCustomers();
         // create orders and assign menus and customers
         createOrdersAndAssignMenus();
+
+        // create eat-in orders, shipping orders and take away orders
+        createEatInOrders();
+        createShippingOrders();
+        createTakeAwayOrders();
     }
 
     // we are going to create 25 customers
@@ -175,6 +185,112 @@ public class DataLoader {
             // that is, one order will have the same menus repeated
             order.setOrderMenuQties(orderMenuQties);
             orderRepository.save(order);
+        }
+    }
+
+    // we are going to create 25 eat-in orders
+    // and save them in the H2 local database
+    private void createEatInOrders() {
+        List<Customer> customers = customerRepository.findAll();
+        List<TableRestaurant> tables = tableRepository.findAll();
+        List<MenuRestaurant> menus = menuRepository.findAll();
+
+        for (int i = 0; i < 25; i++) {
+            EatInOrderRestaurant order = new EatInOrderRestaurant();
+            order.setId(UUID.randomUUID().toString());
+            order.setDate(new Date());
+            order.setWaiter(faker.name().fullName());
+            order.setPeopleQty(faker.random().nextInt(1, 8));
+            order.setTotalPayment(faker.number().randomDouble(2, 10, 200));
+            order.setPaid(faker.bool().bool());
+
+            // set table
+            order.setTableRestaurant(tables.get(faker.random().nextInt(tables.size())));
+
+            // Create OrderMenuQty entries
+            List<OrderMenuQty> orderMenuQties = new ArrayList<>();
+            for (int j = 0; j < faker.random().nextInt(1, 5); j++) {
+                OrderMenuQty orderMenuQty = new OrderMenuQty();
+                orderMenuQty.setId(UUID.randomUUID().toString());
+                orderMenuQty.setOrder(order);
+                orderMenuQty.setMenu(menus.get(faker.random().nextInt(menus.size())));
+                orderMenuQty.setQuantity(faker.random().nextInt(1, 5));
+                orderMenuQties.add(orderMenuQty);
+            }
+            order.setOrderMenuQties(orderMenuQties);
+
+            eatInOrderRepository.save(order);
+            orderMenuQtyRepository.saveAll(orderMenuQties);
+        }
+    }
+
+    // we are going to create 25 shipping orders
+    // and save them in the H2 local database
+    private void createShippingOrders() {
+        List<Customer> customers = customerRepository.findAll();
+        List<MenuRestaurant> menus = menuRepository.findAll();
+
+        for (int i = 0; i < 25; i++) {
+            ShippingOrderRestaurant order = new ShippingOrderRestaurant();
+            order.setId(UUID.randomUUID().toString());
+            order.setDate(new Date());
+            order.setWaiter(faker.name().fullName());
+            order.setPeopleQty(faker.random().nextInt(1, 8));
+            order.setTotalPayment(faker.number().randomDouble(2, 10, 200));
+            order.setPaid(faker.bool().bool());
+            order.setAddress(faker.address().fullAddress());
+            // Set customer
+            order.setCustomerShipping(customers.get(faker.random().nextInt(customers.size())));
+
+            // Create OrderMenuQty entries
+            List<OrderMenuQty> orderMenuQties = new ArrayList<>();
+            for (int j = 0; j < faker.random().nextInt(1, 5); j++) {
+                OrderMenuQty orderMenuQty = new OrderMenuQty();
+                orderMenuQty.setId(UUID.randomUUID().toString());
+                orderMenuQty.setOrder(order);
+                orderMenuQty.setMenu(menus.get(faker.random().nextInt(menus.size())));
+                orderMenuQty.setQuantity(faker.random().nextInt(1, 5));
+                orderMenuQties.add(orderMenuQty);
+            }
+            order.setOrderMenuQties(orderMenuQties);
+
+            shippingOrderRepository.save(order);
+            orderMenuQtyRepository.saveAll(orderMenuQties);
+        }
+    }
+
+    // we are going to create 25 take-away orders
+    // and save them in the H2 local database
+    private void createTakeAwayOrders() {
+        List<Customer> customers = customerRepository.findAll();
+        List<MenuRestaurant> menus = menuRepository.findAll();
+
+        for (int i = 0; i < 25; i++) {
+            TakeAwayOrder order = new TakeAwayOrder();
+            order.setId(UUID.randomUUID().toString());
+            order.setDate(new Date());
+            order.setWaiter(faker.name().fullName());
+            order.setPeopleQty(faker.random().nextInt(1, 8));
+            order.setTotalPayment(faker.number().randomDouble(2, 10, 200));
+            order.setPaid(faker.bool().bool());
+
+            // Set customer
+            order.setCustomerTakeAway(customers.get(faker.random().nextInt(customers.size())));
+
+            // Create OrderMenuQty entries
+            List<OrderMenuQty> orderMenuQties = new ArrayList<>();
+            for (int j = 0; j < faker.random().nextInt(1, 5); j++) {
+                OrderMenuQty orderMenuQty = new OrderMenuQty();
+                orderMenuQty.setId(UUID.randomUUID().toString());
+                orderMenuQty.setOrder(order);
+                orderMenuQty.setMenu(menus.get(faker.random().nextInt(menus.size())));
+                orderMenuQty.setQuantity(faker.random().nextInt(1, 5));
+                orderMenuQties.add(orderMenuQty);
+            }
+            order.setOrderMenuQties(orderMenuQties);
+
+            takeAwayOrderRepository.save(order);
+            orderMenuQtyRepository.saveAll(orderMenuQties);
         }
     }
 }
