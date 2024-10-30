@@ -21,9 +21,15 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
-    private List<OrderRestaurant> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderMenuQty> orderMenuQties;
+
+    // Constructor without orderMenuQties
+    public MenuRestaurant(String id, String name, String content) {
+        this.id = id;
+        this.name = name;
+        this.content = content;
+    }
 
     @ManyToMany
     @JoinTable(

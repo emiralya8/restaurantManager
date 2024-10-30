@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -29,6 +32,14 @@ public class Booking {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_FK_ID")
     private Customer customerMapped;
+
+    public Booking(String id, int peopleQty, Date date, Date bookingDate, String shift) {
+        this.id = id;
+        this.peopleQty = peopleQty;
+        this.date = date;
+        this.bookingDate = bookingDate;
+        this.shift = shift;
+    }
 
 
     // Custom toString method (optional, as @Data provides a default toString)
