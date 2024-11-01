@@ -21,14 +21,14 @@ public class EatInOrderRestaurant extends OrderRestaurant {
 
     private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
 
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "TABLE_RESTAURANT_EAT_IN_ORDER_FK_ID")
-//    private TableRestaurant orderedTableRestaurant;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TABLE_RESTAURANT_EAT_IN_ORDER_FK_ID")
+    private TableRestaurant orderedTableRestaurant;
 
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, ArrayList<Menu> menus,
-                                ArrayList<TableRestaurant> tableRestaurants) {
+                                double totalPayment, boolean paid, ArrayList<Menu> menus
+                                ,ArrayList<TableRestaurant> tableRestaurants) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.tableRestaurants = tableRestaurants;
     }
