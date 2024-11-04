@@ -36,8 +36,10 @@ public class BookingTableTest {
         booking1.setPhoneNumber("561-651-25-25");
 
         // Create tableRestaurant object
-        TableRestaurant tableRestaurant1 = new TableRestaurant("TR01", "Table 01",
-                "TABLE 01 for 4 people outdoors",  4, false, new ArrayList<>());
+//        TableRestaurant tableRestaurant1 = new TableRestaurant("TR01", "Table 01",
+//                "TABLE 01 for 4 people outdoors",  4, false, new ArrayList<>());
+
+        TableRestaurant tableRestaurant1 = new TableRestaurant("TR01", "Table 01", "TABLE 01 for 4 people outdoors",  4, false, new ArrayList<>(), new ArrayList<>());
 
         // assign  booking to tableRestaurant
         tableRestaurant1.getBookings().add(booking1);
