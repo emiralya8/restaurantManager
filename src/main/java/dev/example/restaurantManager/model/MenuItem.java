@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class MenuItem {
     private String name;
     private String description;
     private double price;
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "menuItems")
     private List<MenuRestaurant> menus;
 
