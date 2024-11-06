@@ -13,6 +13,7 @@ public class Menu implements Serializable {
     // Add a serialVersionUID
     private static final long serialVersionUID = 1L;
 
+    private Integer Id;
     private String name;
     private Double price;
     private String content;

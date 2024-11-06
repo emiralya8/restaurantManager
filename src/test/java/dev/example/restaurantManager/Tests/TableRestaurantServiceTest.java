@@ -24,9 +24,10 @@ public class TableRestaurantServiceTest {
     @Autowired
     private TableRestaurantService tableRestaurantService;
 
-    @MockBean
+    @Autowired
     private TableRestaurantRepository tableRestaurantRepository;
 
+    //comment for other use mockito
     //    @BeforeEach
 //    public void setup() {
 //        MockitoAnnotations.initMocks(this);
@@ -53,8 +54,10 @@ public class TableRestaurantServiceTest {
         EatInOrderRestaurant eatInOrder01 = new EatInOrderRestaurant("Eat01",new Date("15/12/2024"),"waiter01",10,0.0,false,new ArrayList<>(), tabla1);
         tabla1.getEatInOrderRestaurant().add(eatInOrder01);
 
-        when(tableRestaurantRepository.save(any(TableRestaurant.class))).thenReturn(tabla1);
-        when(tableRestaurantRepository.findById(any(String.class))).thenReturn(Optional.of(tabla1));
+//comment for other use mockito
+//        when(tableRestaurantRepository.save(any(TableRestaurant.class))).thenReturn(tabla1);
+//        when(tableRestaurantRepository.findById(any(String.class))).thenReturn(Optional.of(tabla1));
+
         //        Arrange
 
         TableRestaurant tb1 = tableRestaurantService.createTableRestaurant(tabla1);

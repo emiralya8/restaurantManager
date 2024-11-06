@@ -1,7 +1,8 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.model.TableRestaurant;
+import dev.example.restaurantManager.model.*;
+import dev.example.restaurantManager.service.BookingService;
+import dev.example.restaurantManager.service.EatInOrderRestaurantService;
 import dev.example.restaurantManager.service.TableRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +33,9 @@ public class TableRestaurantController {
     @PostMapping
     public ResponseEntity<TableRestaurant> saveTableRestaurant(@RequestBody
     TableRestaurant tableRestaurant){
+
         HttpHeaders headers = this.getCommonHeaders("Table Restaurant");
+
         TableRestaurant newTableRestaurant = tableRestaurantService.createTableRestaurant(tableRestaurant);
         return newTableRestaurant != null
                 ? new ResponseEntity<>(newTableRestaurant, headers, HttpStatus.OK)
