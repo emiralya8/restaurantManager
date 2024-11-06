@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class Customer {
     private int age;
     private boolean vipCustomer;
     private boolean deleted;
-    
+
+    @JsonIgnore
     @OneToMany(mappedBy = "customerMapped", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<Booking> bookings;

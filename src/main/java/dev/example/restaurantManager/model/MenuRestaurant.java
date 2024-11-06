@@ -21,6 +21,7 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderMenuQty> orderMenuQties;
 

@@ -25,6 +25,7 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderMenuQty> orderMenuQties;
 

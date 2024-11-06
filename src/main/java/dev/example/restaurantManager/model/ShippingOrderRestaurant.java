@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
     private String address;
     private String phoneNumber;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_SHIPPING_FK_ID")
     private Customer customerShipping;
