@@ -105,7 +105,7 @@ public class CustomerControllerTest {
     public void testApi() {
         given()
                 .when()
-                .get("http://localhost:8080/api/v1/customer/allCustomers")
+                .get("http://localhost:8084/api/v1/customer/allCustomers")
                 .then()
                 .statusCode(200);
     }
