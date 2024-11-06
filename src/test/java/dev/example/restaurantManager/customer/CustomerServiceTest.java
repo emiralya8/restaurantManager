@@ -1,4 +1,4 @@
-package dev.example.restaurantManager;
+package dev.example.restaurantManager.customer;
 
 import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.repository.CustomerRepository;
