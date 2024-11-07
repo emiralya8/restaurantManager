@@ -48,6 +48,41 @@ public class OrderRepositoryTest {
         assertThat(existingOrder.getId()).isEqualTo(orderId);
         assertThat(existingMenu.getId()).isEqualTo(menuId);
     }
+
+
+    @Test
+    public void testUpdateOrderMenuQty() {
+        // Get the first OrderMenuQty from the repository
+        OrderMenuQty orderMenuQty = orderMenuQtyRepository.findAll(PageRequest.of(0, 1)).getContent().get(0);
+        assertThat(orderMenuQty).isNotNull();
+
+        // Store the original quantity and IDs
+        int originalQuantity = orderMenuQty.getQuantity();
+        String orderId = orderMenuQty.getOrder().getId();
+        String menuId = orderMenuQty.getMenu().getId();
+
+        // Update the quantity
+        int newQuantity = originalQuantity + 1;
+        orderMenuQty.setQuantity(newQuantity);
+        orderMenuQtyRepository.save(orderMenuQty);
+
+        // Retrieve the updated OrderMenuQty
+        OrderMenuQty updatedOrderMenuQty = orderMenuQtyRepository.findById(orderMenuQty.getId()).orElse(null);
+        assertThat(updatedOrderMenuQty).isNotNull();
+        assertThat(updatedOrderMenuQty.getQuantity()).isEqualTo(newQuantity);
+
+        // Verify that the associated Order and Menu still exist and haven't changed
+        OrderRestaurant existingOrder = orderRestaurantRepository.findById(orderId).orElse(null);
+        MenuRestaurant existingMenu = menuRestaurantRepository.findById(menuId).orElse(null);
+        assertThat(existingOrder).isNotNull();
+        assertThat(existingMenu).isNotNull();
+        assertThat(existingOrder.getId()).isEqualTo(orderId);
+        assertThat(existingMenu.getId()).isEqualTo(menuId);
+
+        // Verify that the updated OrderMenuQty still references the same Order and Menu
+        assertThat(updatedOrderMenuQty.getOrder().getId()).isEqualTo(orderId);
+        assertThat(updatedOrderMenuQty.getMenu().getId()).isEqualTo(menuId);
+    }
 }
 
 
