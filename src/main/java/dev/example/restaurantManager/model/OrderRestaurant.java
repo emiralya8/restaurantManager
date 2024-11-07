@@ -63,7 +63,7 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", orderMenuQties=" + orderMenuQties +
+                //", orderMenuQties=" + orderMenuQties +
                 '}';
     }
 
