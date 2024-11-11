@@ -1,9 +1,6 @@
 package dev.example.restaurantManager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +23,15 @@ public class MenuRestaurant  {
 
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
+
+    //using unidirectional manytomany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(
+//            name = "MENU_RESTAURANT_MENU_ITEM",
+//            joinColumns = @JoinColumn(name = "MENU_RESTAURANT_ID_FK"),
+//            inverseJoinColumns = @JoinColumn(name = "MENU_ITEM_ID_FK")
+//    )
+    private List<MenuItem> menuItems = new ArrayList<>();
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
