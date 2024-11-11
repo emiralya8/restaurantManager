@@ -1,4 +1,4 @@
-package dev.example.restaurantManager;
+package dev.example.restaurantManager.customer;
 
 import dev.example.restaurantManager.controller.CustomerController;
 import dev.example.restaurantManager.model.Customer;
@@ -101,11 +101,12 @@ public class CustomerControllerTest {
         assertNotNull(response.getHeaders().get("desc"));
     }
 
+    // port 8084 spring boot
     @Test
     public void testApi() {
         given()
                 .when()
-                .get("http://localhost:8080/api/v1/customer/allCustomers")
+                .get("http://localhost:8084/api/v1/customer/allCustomers")
                 .then()
                 .statusCode(200);
     }
