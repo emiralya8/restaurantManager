@@ -22,8 +22,8 @@ public class MenuItem {
     private String description;
     private double price;
 
-    //using manytomany bidirectional way.
-    //@JsonIgnore
+    //using manytomany bidirectional way and remove recursion issue.
+    @JsonIgnore
     @ManyToMany(mappedBy = "menuItems")
     private List<MenuRestaurant> menus;
 
