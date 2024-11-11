@@ -24,7 +24,7 @@ public class MenuRestaurant  {
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
-    //using unidirectional manytomany
+    //using bidirectional manytomany
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(
 //            name = "MENU_RESTAURANT_MENU_ITEM",

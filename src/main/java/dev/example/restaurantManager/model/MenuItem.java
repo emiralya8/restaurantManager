@@ -22,10 +22,10 @@ public class MenuItem {
     private String description;
     private double price;
 
-    //using manytomany unidirectional way.
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "menuItems")
-//    private List<MenuRestaurant> menus;
+    //using manytomany bidirectional way.
+    //@JsonIgnore
+    @ManyToMany(mappedBy = "menuItems")
+    private List<MenuRestaurant> menus;
 
     public MenuItem(String name, String description, double price) {
         this.id = UUID.randomUUID().toString();
