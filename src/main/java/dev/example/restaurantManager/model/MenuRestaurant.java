@@ -1,19 +1,24 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class MenuRestaurant  {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String name;
     private Double price;
@@ -25,12 +30,13 @@ public class MenuRestaurant  {
     private List<OrderRestaurant> orders = new ArrayList<>();
 
     //using bidirectional manytomany
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(
-//            name = "MENU_RESTAURANT_MENU_ITEM",
-//            joinColumns = @JoinColumn(name = "MENU_RESTAURANT_ID_FK"),
-//            inverseJoinColumns = @JoinColumn(name = "MENU_ITEM_ID_FK")
-//    )
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "menu_item",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_item_id"))
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
