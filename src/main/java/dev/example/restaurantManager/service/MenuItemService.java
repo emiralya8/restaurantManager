@@ -9,4 +9,5 @@ public interface MenuItemService {
     MenuItem getMenuItemsById(String id);
     MenuItem updateMenuItems(String id, MenuItem menuItemDetails);
     boolean deleteMenuItems(String id);
+    long countMenuItems();
 }

@@ -63,4 +63,9 @@ public class MenuItemServiceImpl implements MenuItemService {
         }
         return false;
     }
+
+    @Override
+    public long countMenuItems() {
+        return menuItemRepository.count();
+    }
 }

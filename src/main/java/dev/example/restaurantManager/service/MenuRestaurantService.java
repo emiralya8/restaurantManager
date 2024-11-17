@@ -9,4 +9,5 @@ public interface MenuRestaurantService {
     MenuRestaurant getMenuRestaurantsById(String id);
     MenuRestaurant updateMenuRestaurants(String id, MenuRestaurant menuRestaurantDetails);
     boolean deleteMenuRestaurants(String id);
+    long countMenuRestaurant();
 }

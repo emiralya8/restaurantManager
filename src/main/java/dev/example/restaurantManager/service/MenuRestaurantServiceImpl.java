@@ -62,4 +62,9 @@ public class MenuRestaurantServiceImpl implements MenuRestaurantService{
         }
         return false;
     }
+
+    @Override
+    public long countMenuRestaurant() {
+        return menuRestaurantRepository.count();
+    }
 }
