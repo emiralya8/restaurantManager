@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
+@Entity
 public class MenuItem {
     @Id
     @GeneratedValue(generator = "UUID")

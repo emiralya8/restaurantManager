@@ -34,7 +34,7 @@ public class MenuRestaurant  {
     @ManyToMany(fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "menu_item",
+            name = "menu_item_restaurant",
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_item_id"))
     private List<MenuItem> menuItems = new ArrayList<>();
@@ -46,6 +46,16 @@ public class MenuRestaurant  {
         this.content = content;
         this.active = active;
         this.water = water;
+    }
+
+    public void addMenuItem(MenuItem menuItem) {
+        this.menuItems.add(menuItem);
+        if (menuItem.getMenus() == null) {
+            menuItem.setMenus(new ArrayList<>());
+        }
+        if (!menuItem.getMenus().contains(this)) {
+            menuItem.getMenus().add(this);
+        }
     }
 
     //We  might want to exclude 'orders' from toString() to avoid circular references
