@@ -1,7 +1,6 @@
 package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.MenuItem;
-
 import java.util.List;
 
 public interface MenuItemService {
