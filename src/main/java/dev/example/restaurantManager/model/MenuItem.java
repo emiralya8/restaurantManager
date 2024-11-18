@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class MenuItem {
+public abstract class MenuItem {
 
     @Id
     private String id;
