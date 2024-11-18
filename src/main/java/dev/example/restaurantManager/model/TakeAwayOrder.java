@@ -19,7 +19,7 @@ public class TakeAwayOrder extends OrderRestaurant {
 
     // Constructor for TakeAwayOrder with the WHOLE DATA fields
     public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
-                         double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
+                         double totalPayment, boolean paid, ArrayList<OrderMenuQty> menus,
                          Customer customerTakeAway) {
 
         // THIS PART is SUPERCLASS
