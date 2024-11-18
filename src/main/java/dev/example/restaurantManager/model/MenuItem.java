@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class MenuItem {
 
     @Id
@@ -26,5 +26,9 @@ public abstract class MenuItem {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public MenuItem() {
+
     }
 }

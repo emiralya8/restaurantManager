@@ -98,13 +98,13 @@ public class DataLoader {
     // and save them in the H2 local database
     private void createMenuItems() {
         for (int i = 0; i < 25; i++) {
-            MenuItem menuItem = new MenuItem(
-                    UUID.randomUUID().toString(),
-                    faker.food().dish(),
-                    faker.food().ingredient() + " " + faker.food().ingredient() ,
-                    faker.number().randomDouble(2, 5, 30)
-            );
-            menuItemRepository.save(menuItem);
+//            MenuItem menuItem = new MenuItem(
+//                    UUID.randomUUID().toString(),
+//                    faker.food().dish(),
+//                    faker.food().ingredient() + " " + faker.food().ingredient() ,
+//                    faker.number().randomDouble(2, 5, 30)
+//            );
+//            menuItemRepository.save(menuItem);
         }
     }
 
