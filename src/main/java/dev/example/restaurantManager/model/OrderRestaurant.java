@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.stream.Collectors;
 import lombok.*;
 
 @Getter
@@ -24,39 +25,43 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
+    @OneToMany(mappedBy = "orderRestaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY
-            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "ORDER_RESTAURANT_MENU",
-            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
-    )
-    private List<MenuRestaurant> menus = new ArrayList<>();
+    private List<OrderMenuQty> ordersQty = new ArrayList<>();
 
-    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-            this.menus.add(menu);
-            menu.getOrders().add(this);
-        return this.menus;
+    public List<OrderMenuQty> addOrderMenuQty(OrderMenuQty orderMenuQty) {
+        if(ordersQty == null) {
+            ordersQty = new ArrayList<>();
+            ordersQty.add(orderMenuQty);
+            return ordersQty;
+        }else {
+            ordersQty.add(orderMenuQty);
+            return ordersQty;
+        }
+    }
+    public List<String> getOrderMenuQtyIds() {
+        return ordersQty.stream()
+                .map(OrderMenuQty::getId)
+                .collect(Collectors.toList());
     }
 
-    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-            this.menus.remove(menu);
-            menu.getOrders().remove(this);
-        return this.menus;
+    public void removeOrderMenuQty(OrderMenuQty orderMenuQty) {
+        ordersQty.remove(orderMenuQty);
     }
 
     @Override
     public String toString() {
         return "OrderRestaurant{" +
-                "id='" + id + '\'' +
-                ", date=" + date +
-                ", waiter='" + waiter + '\'' +
-                ", peopleQty=" + peopleQty +
-                ", totalPayment=" + totalPayment +
-                ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
+                "id:'" + id + '\'' +
+                ", date:" + date +
+                ", waiter:'" + waiter + '\'' +
+                ", peopleQty:" + peopleQty +
+                ", totalPayment:" + totalPayment +
+                ", paid:" + paid +
+                ", Quantity orders: " + (ordersQty == null ? 0 : ordersQty.size()) + " ordenes" +
+                ", Ids: " + getOrderMenuQtyIds() +
+                ", Quantity menu:" + ordersQty.stream().collect(Collectors.groupingBy(OrderMenuQty::getMenuName, Collectors.counting())) +
+                ", Menus:" + ordersQty.stream().map(OrderMenuQty::getMenuName).collect(Collectors.toList()) +
                 '}';
     }
 
