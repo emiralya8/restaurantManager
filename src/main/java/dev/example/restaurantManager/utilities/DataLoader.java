@@ -5,7 +5,6 @@ import dev.example.restaurantManager.model.*;
 import dev.example.restaurantManager.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -33,6 +32,11 @@ public class DataLoader {
     private ShippingOrderRepository shippingOrderRepository;
     @Autowired
     private TakeAwayOrderRepository takeAwayOrderRepository;
+    @Autowired
+    private MainCourseRepository mainCourseRepository;
+    @Autowired
+    private DessertRepository dessertRepository;
+
     private final Faker faker = new Faker(new Locale("en-US"));
 
     // master method orchestrating all other methods to
@@ -44,7 +48,8 @@ public class DataLoader {
         // then create relationships between them
         createCustomers();
         createTables();
-        createMenuItems();
+        createMainCourse();
+        createDessert();
 
         // create and assign menu items
         createMenusAndAssignMenuItems();
@@ -94,17 +99,33 @@ public class DataLoader {
         }
     }
 
+    private void createMainCourse() {
+        for (int i = 0; i < 10; i++) {
+            MenuItem menuItem;
+            menuItem = new MainCourse(
+                    UUID.randomUUID().toString(),
+                    faker.food().dish(),
+                    faker.food().ingredient() + " " + faker.food().ingredient(),
+                    faker.number().randomDouble(2, 5, 30),
+                    true
+            );
+            menuItemRepository.save(menuItem);
+        }
+    }
+
     // we are going to create 25 menu items
     // and save them in the H2 local database
-    private void createMenuItems() {
+    private void createDessert() {
         for (int i = 0; i < 25; i++) {
-//            MenuItem menuItem = new MenuItem(
-//                    UUID.randomUUID().toString(),
-//                    faker.food().dish(),
-//                    faker.food().ingredient() + " " + faker.food().ingredient() ,
-//                    faker.number().randomDouble(2, 5, 30)
-//            );
-//            menuItemRepository.save(menuItem);
+            MenuItem menuItem;
+            menuItem = new Dessert(
+                    UUID.randomUUID().toString(),
+                    faker.food().dish(),
+                    faker.food().ingredient() + " " + faker.food().ingredient(),
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.random().nextBoolean()
+            );
+            menuItemRepository.save(menuItem);
         }
     }
 
